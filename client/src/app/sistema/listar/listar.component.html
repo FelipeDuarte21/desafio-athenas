@@ -1,0 +1,65 @@
+<a href="#" routerLink="incluir" type="button" class="btn btn-primary me-1"><i class="fa-solid fa-user-plus me-1"></i>Incluir Pessoa</a>
+<button (click)="pesquisarPessoas()" type="button" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass me-1"></i>Pesquisar Pessoas</button>
+
+<div class="row mt-5" *ngIf="paginaPessoas && paginaPessoas?.content.length > 0">
+
+    <div class="col-3 col-md-4">
+        <div class="row justify-content-start">
+            <div class="col-12 col-md-5 col-lg-4 col-xl-3">
+                <quantidade-registro [qtdOpcoes]="qtdOpcoes" [opcaoEscolhida]="quantidadeAtual" (alteraQuantidade)="onMudarQuantidade($event)"></quantidade-registro>
+            </div>
+        </div>
+    </div>
+   
+    <div class="col-5 col-md-4">
+        <paginacao [paginaAtual]="paginaAtual" [totalPagina]="totalPagina"
+            (anterior)="onMudarPagina($event)" (proximo)="onMudarPagina($event)"></paginacao>
+    </div>
+
+</div>
+
+<div class="mt-4" *ngIf="paginaPessoas && paginaPessoas?.content.length > 0">
+
+    <div class="row">
+       
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 mt-2" *ngFor="let p of paginaPessoas.content">
+            <div class="card linha-card">
+                <div class="card-body pt-2">
+                    <h6 class="mb-0 mt-0"><small><i class="fa-solid fa-user"></i>Nome</small></h6>
+                    <span class="mt-0 fw-bolder" style="font-size: 24px;">{{p.nome}}</span>
+    
+                    <h6 class="mt-3 mb-0"><i class="fa-solid fa-address-card me-1"></i>CPF</h6>
+                    <span class="mt-0 text-justify">{{p.cpf | cpf}}</span>
+    
+                    <h6 class="mt-3 mb-0"><i class="fas fa-calendar-alt me-1"></i>Data de Nascimento:</h6>
+                    <span class="mt-0">{{p.dataNascimento | date: 'dd/MM/yyyy'}}</span>
+
+                    <h6 class="mt-3 mb-0"><i class="fa-solid fa-children me-1"></i>Sexo:</h6>
+                    <ng-container *ngIf="p.sexo == 'M'">
+                        <span class="mt-0">Masculino</span>
+                    </ng-container>
+                    <ng-container *ngIf="p.sexo == 'F'">
+                        <span class="mt-0">Femenino</span>
+                    </ng-container>
+
+                    <h6 class="mt-3 mb-0"><i class="fa-solid fa-ruler-vertical me-1"></i>Altura</h6>
+                    <span class="mt-0">{{p.altura}}</span>
+
+                    <h6 class="mt-3 mb-0"><i class="fa-solid fa-weight-scale me-1"></i>Peso</h6>
+                    <span class="mt-0">{{p.peso}} Kilos</span>
+
+                    <div class="d-grid col-12 mt-2">
+                        <button (click)="calcularPeso(p.id)" type="button" class="btn btn-primary"><i class="fa-solid fa-weight-scale me-1"></i>Calcular Peso Ideal</button>
+                    </div>
+            
+                </div>
+                <div class="card-footer">
+                    <button (click)="alterar(p.id)" class="btn btn-primary me-1" type="button"><i class="fa-solid fa-user-pen me-1"></i>Alterar</button>
+                    <button (click)="excluir(p.id)" class="btn btn-danger" type="excluir"><i class="fa-solid fa-user-xmark me-1"></i>Excluir</button>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+
+</div>

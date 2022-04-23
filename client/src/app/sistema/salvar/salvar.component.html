@@ -1,0 +1,84 @@
+<a href="#" routerLink="/sistema" type="button" class="btn btn-outline-primary"><i class="fa-solid fa-arrow-rotate-left me-1"></i>Voltar</a>
+
+<h4 class="text-center"><i class="fa-solid me-1" [class]="icone" ></i> {{titulo}} Pessoa</h4>
+
+<form [formGroup]="formPessoa" (submit)="enviar()" class="mt-4">
+
+    <div class="row">
+        <div class="col-12">
+            <label for="nome">Nome:</label>
+            <input formControlName="nome" type="text" class="form-control" id="nome"
+                [ngClass]="{'is-invalid': verificaCampo('nome')}" autocomplete="off">
+            <span class="float-end text-end">{{tamanhoCampo("nome")}}/60</span>
+
+            <div class="invalid-feedback" *ngIf="formPessoa.get('nome').errors?.required">Nome é requerido!</div>
+            <div class="invalid-feedback" *ngIf="formPessoa.get('nome').errors?.maxlength">Nome maior que 80 caracteres</div>
+        </div>
+    </div> 
+
+    <div class="row">
+
+        <div class="col-12 col-md-4">
+
+            <label for="cpf">CPF:</label>
+            <input formControlName="cpf" type="text" class="form-control" id="cpf"
+                [ngClass]="{'is-invalid': verificaCampo('cpf')}" autocomplete="off">
+            <span class="float-end text-end">{{tamanhoCampo("cpf")}}/11</span>
+
+            <div class="invalid-feedback" *ngIf="formPessoa.get('cpf').errors?.required">CPF é requerido!</div>
+            <div class="invalid-feedback" *ngIf="formPessoa.get('cpf').errors?.pattern">CPF está fora do padrão</div>
+
+        </div>
+
+        <div class="col-12 col-md-4">
+
+            <label for="sexo">Sexo:</label>
+            <select formControlName="sexo" id="sexo" class="form-control" 
+                [ngClass]="{'is-invalid': verificaCampo('peso')}">
+                <option value="M">Masculino</option>
+                <option value="F">Feminino</option>
+            </select>
+
+            <div class="invalid-feedback" *ngIf="formPessoa.get('sexo').errors?.required">Sexo é requerido!</div>
+
+        </div>
+
+        <div class="col-12 col-md-4 mt-3 mt-md-0">
+
+            <label for="dataNascimento">Data de Nascimento:</label>
+            <input type="date" formControlName="dataNascimento" class="form-control" id="dataNascimento" 
+                [ngClass]="{'is-invalid': verificaCampo('dataNascimento')}">
+
+            <div class="invalid-feedback" *ngIf="formPessoa.get('dataNascimento').errors?.required">Data de Nascimento é requerido!</div>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <label for="altura">Altura:</label>
+            <input type="number" min="0.00" formControlName="altura" class="form-control" id="altura" 
+                [ngClass]="{'is-invalid': verificaCampo('altura')}">
+
+            <div class="invalid-feedback" *ngIf="formPessoa.get('altura').errors?.required">Altura é requerida!</div>
+
+        </div>
+
+        <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <label for="peso">Peso:</label>
+            <input type="number" min="0.00" formControlName="peso" class="form-control" id="peso" 
+                [ngClass]="{'is-invalid': verificaCampo('peso')}">
+
+            <div class="invalid-feedback" *ngIf="formPessoa.get('peso').errors?.required">Peso é requerido!</div>
+
+        </div>
+
+    </div>
+
+    <button [disabled]="formPessoa.invalid || desativaBotao" type="submit" class="btn btn-primary mt-4">
+        <i class="far fa-save me-1"></i>Salvar
+    </button>
+
+</form>
